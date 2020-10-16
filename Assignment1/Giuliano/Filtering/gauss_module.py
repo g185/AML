@@ -15,7 +15,7 @@ The function should return the Gaussian values Gx computed at the indexes x
 #returns gaussian vector applied on sigma
 def gauss(sigma):
     r = range(-int(3*sigma), int(3*sigma))
-    return [1 / (sigma * sqrt(2*pi)) * exp(-float(x)**2/(2*sigma**2)) for x in r], r
+    return np.array([1 / (sigma * sqrt(2*pi)) * exp(-float(x)**2/(2*sigma**2)) for x in r]), r
 
 #returns gaussian kernel on sigma
 def gauss_kernel(sigma):
@@ -57,7 +57,7 @@ The function should return the Gaussian derivative values Dx computed at the ind
 """
 def gaussdx(sigma):
     r = range(-int(3*sigma), int(3*sigma))
-    return [1 / (sigma**3 * sqrt(2*pi)) * x * exp(-float(x)**2/(2*sigma**2)) for x in r], r
+    return np.array([1 / (sigma**3 * sqrt(2*pi)) * x * exp(-float(x)**2/(2*sigma**2)) for x in r]), r
 
 
 

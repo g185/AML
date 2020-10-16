@@ -27,8 +27,6 @@ plt.show()
 gauss_module.gauss_kernel(sigma)
 
 ## function gaussianfilter (Question 1.b)
-"""
-ORIGINAL
 
 img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
 smooth_img = gauss_module.gaussianfilter(img, sigma)
@@ -41,9 +39,10 @@ plt.imshow(img, cmap='gray', vmin=0, vmax=255)
 plt.sca(ax2)
 plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
 plt.show()
+
+
 """
-
-
+TESTING
 img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
 smooth_img = gauss_module.gaussianfilter(img, sigma)
 expected = gauss_module.expected_result_GF(img, sigma)
@@ -59,7 +58,7 @@ plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
 plt.sca(ax3)
 plt.imshow(smooth_img_fast, cmap='gray', vmin=0, vmax=255)
 plt.show()
-
+"""
 
 ## function gaussdx (Question 1.c)
 
@@ -84,6 +83,7 @@ plt.figure(6), plt.imshow(img_imp, cmap='gray')
 sigma = 7.0
 [Gx, x] = gauss_module.gauss(sigma)
 [Dx, x] = gauss_module.gaussdx(sigma)
+
 
 Gx = Gx.reshape(1, Gx.size)
 Dx = Dx.reshape(1, Dx.size)
