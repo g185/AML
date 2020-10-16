@@ -1,2 +1,0 @@
-https://stackoverflow.com/questions/98359/fastest-gaussian-blur-implementation
-https://stackoverflow.com/questions/46533210/linearly-separating-a-gaussian-filter-and-calculating-with-numpy
