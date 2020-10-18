@@ -13,8 +13,18 @@ The function should return the Gaussian values Gx computed at the indexes x
 """
 def gauss(sigma):
     
-    #...
-    
+    r = range(-int(3*sigma),int(3*sigma)+1)
+    x = []
+    Gx = []
+    for i in r:
+        data = [1 / (sigma * sqrt(2*pi)) * exp(-float(i)**2/(2*sigma**2))]
+        Gx.append(data)
+        x.append(i)
+        
+    Gx = np.array(Gx)
+    x = np.array(x)
+        
+        
     return Gx, x
 
 
@@ -28,8 +38,18 @@ Output: smoothed image
 """
 def gaussianfilter(img, sigma):
     
-    #...
+    r = range(-int(3*sigma),int(3*sigma)+1)
 
+    Gx = []
+    for i in r:
+        data = [1 / (sigma * sqrt(2*pi)) * exp(-float(i)**2/(2*sigma**2))]
+        Gx.append(data)
+
+    Gx = np.array(Gx)
+     
+    smooth_img = signal.convolve2d(Gx, img, boundary='symm', mode='valid')
+    
+    
     return smooth_img
 
 
@@ -41,8 +61,17 @@ The function should return the Gaussian derivative values Dx computed at the ind
 """
 def gaussdx(sigma):
 
-    #...
+    r = range(-int(3*sigma),int(3*sigma)+1)
+    x = []
+    Dx = []
+    for i in r:
+        data = (-1 / (sigma**3 * sqrt(2*pi))* i * exp(-float(i)**2/(2*sigma**2)))
+        Dx.append(data)
+        x.append(i)
     
+    Dx = np.array(Dx)
+    x = np.array(x)
+
     return Dx, x
 
 
