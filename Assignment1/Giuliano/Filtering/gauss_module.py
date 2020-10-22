@@ -14,13 +14,13 @@ The function should return the Gaussian values Gx computed at the indexes x
 """
 #returns gaussian vector applied on sigma
 def gauss(sigma):
-    r = range(-int(3*sigma), int(3*sigma))
+    r = range(-int(3*sigma), int(3*sigma) + 1)
     return np.array([1 / (sigma * sqrt(2*pi)) * exp(-float(x)**2/(2*sigma**2)) for x in r]), r
 
 #returns gaussian kernel on sigma
 def gauss_kernel(sigma):
-    vector, _ = gauss(sigma)
-    kernel = np.outer(vector,vector)
+    Gx, x= gauss(sigma)
+    kernel = np.outer(Gx , Gx)
     return kernel
 
 """
@@ -35,17 +35,23 @@ def expected_result_GF(im2d, sigma):
     return scipy.ndimage.gaussian_filter(im2d, sigma)
 
 #basic implementation using gaussian kernel
-def gaussianfilter(im2d, sigma):
+def gaussianfilter_kernel(im2d, sigma):
     return conv2(im2d, gauss_kernel(sigma))
 
-#faster implementation using gaussian filter separability
+#implementation using two gaussian convolutions
+def gaussianfilter_two_convolutions(im2d, sigma):
+    Gx, x = gauss(sigma)
+    Gx = Gx.reshape(1, Gx.size)
+    return conv2(conv2(im2d, Gx, 'same'), Gx.T, 'same')
+
+#implementation using gaussian filter separability over the two axis
 def gaussianfilter_fast_impl(im2d, sigma):
     out = np.zeros(im2d.shape, dtype=im2d.dtype)
     [Gx, _] = gauss(sigma)
     for row in range(im2d.shape[0]):
             out[row,:] = np.convolve(im2d[row,:], Gx, mode='same')
-    for col in range(im2d.shape[1]):
-            out[:,col] = np.convolve(out[:,col], Gx, mode='same')
+    for row in range(im2d.shape[0]):
+            out[row,:] = np.convolve(im2d[row,:], Gx, mode='same')
     return out
 
 
@@ -61,9 +67,14 @@ def gaussdx(sigma):
 
 
 
-def gaussderiv(img, sigma):
-
-    #...
+def gaussderiv(im2d, sigma):
+    imgDy = np.zeros(im2d.shape, dtype=im2d.dtype)
+    imgDx = np.zeros(im2d.shape, dtype=im2d.dtype)
+    [Gx, _] = gaussdx(sigma)
+    for row in range(im2d.shape[0]):
+            imgDx[row,:] = np.convolve(im2d[row,:], Gx, mode='same')
+    for col in range(im2d.shape[1]):
+            imgDy[:,col] = np.convolve(im2d[:,col], Gx, mode='same')
     
     return imgDx, imgDy
 
