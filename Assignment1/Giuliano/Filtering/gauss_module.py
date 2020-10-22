@@ -44,15 +44,6 @@ def gaussianfilter_two_convolutions(im2d, sigma):
     Gx = Gx.reshape(1, Gx.size)
     return conv2(conv2(im2d, Gx, 'same'), Gx.T, 'same')
 
-#implementation using gaussian filter separability over the two axis
-def gaussianfilter_fast_impl(im2d, sigma):
-    out = np.zeros(im2d.shape, dtype=im2d.dtype)
-    [Gx, _] = gauss(sigma)
-    for row in range(im2d.shape[0]):
-            out[row,:] = np.convolve(im2d[row,:], Gx, mode='same')
-    for row in range(im2d.shape[0]):
-            out[row,:] = np.convolve(im2d[row,:], Gx, mode='same')
-    return out
 
 
 
@@ -62,7 +53,7 @@ The filter should be defined for all integer values x in the range [-3sigma,3sig
 The function should return the Gaussian derivative values Dx computed at the indexes x
 """
 def gaussdx(sigma):
-    r = range(-int(3*sigma), int(3*sigma))
+    r = range(-int(3*sigma), int(3*sigma) + 1)
     return np.array([1 / (sigma**3 * sqrt(2*pi)) * x * exp(-float(x)**2/(2*sigma**2)) for x in r]), r
 
 
@@ -70,11 +61,13 @@ def gaussdx(sigma):
 def gaussderiv(im2d, sigma):
     imgDy = np.zeros(im2d.shape, dtype=im2d.dtype)
     imgDx = np.zeros(im2d.shape, dtype=im2d.dtype)
-    [Gx, _] = gaussdx(sigma)
-    for row in range(im2d.shape[0]):
-            imgDx[row,:] = np.convolve(im2d[row,:], Gx, mode='same')
-    for col in range(im2d.shape[1]):
-            imgDy[:,col] = np.convolve(im2d[:,col], Gx, mode='same')
+    [Gx, x] = gauss(sigma)
+    [Dx, x] = gaussdx(sigma)
     
+    Gx = Gx.reshape(1, Gx.size)
+    Dx = Dx.reshape(1, Dx.size)
+    imgDx = conv2(conv2(im2d, Gx, 'same'), Dx.T, 'same')
+    imgDy = conv2(conv2(im2d, Dx, 'same'), Gx.T, 'same')
+
     return imgDx, imgDy
 

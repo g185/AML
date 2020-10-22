@@ -110,6 +110,7 @@ plt.imshow(conv2(conv2(img_imp, Gx.T, 'same'), Dx, 'same') , cmap='gray')
 plt.show()
 
 ## function gaussderiv (Question 1.e)
+img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
 
 [imgDx, imgDy] = gauss_module.gaussderiv(img, 7.0)
 
