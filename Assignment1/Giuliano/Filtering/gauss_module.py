@@ -52,6 +52,7 @@ Gaussian derivative function taking as argument the standard deviation sigma
 The filter should be defined for all integer values x in the range [-3sigma,3sigma]
 The function should return the Gaussian derivative values Dx computed at the indexes x
 """
+#returns gaussian derivative vector applied on sigma
 def gaussdx(sigma):
     r = range(-int(3*sigma), int(3*sigma) + 1)
     return np.array([1 / (sigma**3 * sqrt(2*pi)) * x * exp(-float(x)**2/(2*sigma**2)) for x in r]), r
@@ -63,7 +64,6 @@ def gaussderiv(im2d, sigma):
     imgDx = np.zeros(im2d.shape, dtype=im2d.dtype)
     [Gx, x] = gauss(sigma)
     [Dx, x] = gaussdx(sigma)
-    
     Gx = Gx.reshape(1, Gx.size)
     Dx = Dx.reshape(1, Dx.size)
     imgDx = conv2(conv2(im2d, Gx, 'same'), Dx.T, 'same')

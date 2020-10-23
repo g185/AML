@@ -64,6 +64,7 @@ plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
 plt.sca(ax3)
 plt.imshow(smooth_img_fast, cmap='gray', vmin=0, vmax=255)
 plt.show()
+
 """
 
 ## function gaussdx (Question 1.c)
@@ -129,3 +130,23 @@ plt.imshow(imgmag, cmap='gray')
 plt.sca(ax4)
 plt.imshow(img, cmap='gray')
 plt.show()
+
+#img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/gantrycrane.png')))
+
+[imgDx, imgDy] = gauss_module.gaussderiv(img, 4.0)
+plt.figure(9)
+ax1 = plt.subplot(1,4,1)
+ax2 = plt.subplot(1,4,2)
+ax3 = plt.subplot(1,4,3)
+ax4 = plt.subplot(1,4,4)
+plt.sca(ax1)
+plt.imshow(imgDx, cmap='gray')
+plt.sca(ax2)
+plt.imshow(imgDy, cmap='gray')
+plt.sca(ax3)
+imgmag = np.sqrt(imgDx**2 + imgDy**2)
+plt.imshow(imgmag, cmap='gray')
+plt.sca(ax4)
+plt.imshow(img, cmap='gray')
+plt.show()
+
