@@ -1,5 +1,9 @@
 import numpy as np
+from numpy import array
 from numpy import histogram as hist
+import matplotlib.pyplot as plt
+from PIL import Image
+import match_module
 
 
 
@@ -12,7 +16,6 @@ sys.path.insert(0,filteringpath)
 import gauss_module
 
 
-
 #  compute histogram of image intensities, histogram should be normalized so that sum of all values equals 1
 #  assume that image intensity varies between 0 and 255
 #
@@ -22,10 +25,43 @@ def normalized_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
+    list_img = []
+    for x in array(img_gray).flat:  # Converting to list 
+        list_img.append(x)
 
-    #... (your code here)
+    x = sorted(list_img)
 
+    ## Creating the second array with edge bins
 
+    step = (max(x) - min(x))/num_bins # Defining a step for building the edge bins respect to the chosen number of bins
+    arr2 = np.zeros(num_bins + 1) # Initializing the second array that will define the bins
+
+    for i in range(num_bins):    # Building the edge bins
+
+        if num_bins == 1:
+            arr2 = [float(min(x)), float(max(x))]
+        else:
+            arr2[0] = float(min(x))
+            if int(i) != (num_bins - 1):
+                arr2[i+1] = arr2[i] + float(step)
+            else:
+                arr2[-1] = float(max(x))
+
+    z = np.split(x,np.searchsorted(x,arr2)) ## Defining the first array respect to edge_bins (arr2)
+
+    final1 = []
+
+    for i in range(len(z)):
+        final1.append(len(z[i]))
+
+    cut1 = final1[1::]
+    cut1[-2] = cut1[-2] + cut1[-1] 
+
+    final = np.asarray(cut1[:-1], dtype = np.int64)
+    
+    hists = final/final.sum()
+    bins = arr2
+    
     return hists, bins
 
 
