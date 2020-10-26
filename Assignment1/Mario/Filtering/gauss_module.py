@@ -24,9 +24,8 @@ def gauss(sigma):
     Gx = np.array(Gx)
     x = np.array(x)
         
-        
+    
     return Gx, x
-
 
 
 """
@@ -38,6 +37,11 @@ Output: smoothed image
 """
 def gaussianfilter(img, sigma):
     
+    '''
+    Reimplementing GAUSS this time without returning the value of X, in the way that it will not create a shape that is
+    not supported by the algorithm
+    '''
+                    
     r = range(-int(3*sigma),int(3*sigma)+1)
 
     Gx = []
@@ -46,10 +50,9 @@ def gaussianfilter(img, sigma):
         Gx.append(data)
 
     Gx = np.array(Gx)
+
      
     smooth_img = signal.convolve2d(Gx, img, boundary='symm', mode='valid')
-    
-    
     return smooth_img
 
 
@@ -72,13 +75,21 @@ def gaussdx(sigma):
     Dx = np.array(Dx)
     x = np.array(x)
 
+
     return Dx, x
 
 
 
-def gaussderiv(img, sigma):
-
-    #...
+def gaussderiv(im2d, sigma):
+    imgDy = np.zeros(im2d.shape, dtype=im2d.dtype)
+    imgDx = np.zeros(im2d.shape, dtype=im2d.dtype)
+    [Gx, x] = gauss(sigma)
+    [Dx, x] = gaussdx(sigma)
     
+    Gx = Gx.reshape(1, Gx.size)
+    Dx = Dx.reshape(1, Dx.size)
+    imgDx = conv2(conv2(im2d, Gx, 'same'), Dx.T, 'same')
+    imgDy = conv2(conv2(im2d, Dx, 'same'), Gx.T, 'same')
+
     return imgDx, imgDy
 
