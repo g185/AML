@@ -6,25 +6,18 @@ import math
 # Compute the intersection distance between histograms x and y
 # Return 1 - hist_intersection, so smaller values correspond to more similar histograms
 # Check that the distance range in [0,1]
-
-def dist_intersect(x,y):
   
-  if len(x) == len(y):
-        
-      intersection = np.zeros(len(x))
-      for i in range(len(x)):
-          if x[i] <= y[i]:
-              intersection[i] = x[i]
-          elif x[i] >= y[i]:
-              intersection[i] = y[i]
-  else:
-      print("Error! Histograms with different shapes")
-        
-  dist = ((intersection.sum()/x.sum()) + (intersection.sum()/y.sum())) /2
-  if dist >= 0 and dist <=1:
-      return (1-dist)
-  else:
-      raise ValueError('distance not in in 0-1')
+def dist_intersect(x,y):
+    
+    intersection = np.minimum(x,y)
+    sum_x = x.sum()
+    sum_y = y.sum()
+    
+    dist = ((intersection.sum()/sum_x) + (intersection.sum()/sum_y)) /2
+    if dist >= 0 and dist <=1:
+        return (1-dist)
+    else:
+        raise ValueError('distance not in in 0-1')
 
 
 
