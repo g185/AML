@@ -131,7 +131,7 @@ plt.sca(ax4)
 plt.imshow(img, cmap='gray')
 plt.show()
 
-#img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/gantrycrane.png')))
+img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/gantrycrane.png')))
 
 [imgDx, imgDy] = gauss_module.gaussderiv(img, 4.0)
 plt.figure(9)
