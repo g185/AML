@@ -16,23 +16,28 @@ def rgb2gray(rgb):
     return gray
 
 
-
 ## function gauss (Question 1.a)
 
 sigma = 4.0
 [Gx, x] = gauss_module.gauss(sigma)
-
 plt.figure(1)
 plt.plot(x, Gx, '.-')
+print(list(x),Gx)
 plt.show()
-
-
+gauss_module.gauss_kernel(sigma)
 
 ## function gaussianfilter (Question 1.b)
+import time
 
-img = rgb2gray(np.array(Image.open('graf.png')))
-smooth_img = gauss_module.gaussianfilter(img, sigma)
 
+img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
+start = time.time()
+smooth_img = gauss_module.gaussianfilter_kernel(img, sigma)
+print(time.time() - start)
+
+start = time.time()
+smooth_img = gauss_module.gaussianfilter_two_convolutions(img, sigma)
+print(time.time() - start)
 plt.figure(2)
 ax1 = plt.subplot(1,2,1)
 ax2 = plt.subplot(1,2,2)
@@ -42,7 +47,25 @@ plt.sca(ax2)
 plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
 plt.show()
 
+"""
+TESTING
+img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
+smooth_img = gauss_module.gaussianfilter_kernel(img, sigma)
+expected = gauss_module.gaussianfilter_two_convolutions(img, sigma)
+smooth_img_fast=gauss_module.gaussianfilter_fast_impl(img, sigma)
+plt.figure(2)
+ax1 = plt.subplot(1,3,1)
+ax2 = plt.subplot(1,3,2)
+ax3 = plt.subplot(1,3,3)
+plt.sca(ax1)
+plt.imshow(expected, cmap='gray', vmin=0, vmax=255)
+plt.sca(ax2)
+plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
+plt.sca(ax3)
+plt.imshow(smooth_img_fast, cmap='gray', vmin=0, vmax=255)
+plt.show()
 
+"""
 
 ## function gaussdx (Question 1.c)
 
@@ -68,6 +91,7 @@ sigma = 7.0
 [Gx, x] = gauss_module.gauss(sigma)
 [Dx, x] = gauss_module.gaussdx(sigma)
 
+
 Gx = Gx.reshape(1, Gx.size)
 Dx = Dx.reshape(1, Dx.size)
 
@@ -86,18 +110,16 @@ plt.subplot(2,3,6)
 plt.imshow(conv2(conv2(img_imp, Gx.T, 'same'), Dx, 'same') , cmap='gray')
 plt.show()
 
-
-
 ## function gaussderiv (Question 1.e)
+img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
 
-img_c = np.array(Image.open('graf.png')).astype('double')
-img = rgb2gray(img_c)
 [imgDx, imgDy] = gauss_module.gaussderiv(img, 7.0)
 
 plt.figure(8)
-ax1 = plt.subplot(1,3,1)
-ax2 = plt.subplot(1,3,2)
-ax3 = plt.subplot(1,3,3)
+ax1 = plt.subplot(1,4,1)
+ax2 = plt.subplot(1,4,2)
+ax3 = plt.subplot(1,4,3)
+ax4 = plt.subplot(1,4,4)
 plt.sca(ax1)
 plt.imshow(imgDx, cmap='gray')
 plt.sca(ax2)
@@ -105,6 +127,26 @@ plt.imshow(imgDy, cmap='gray')
 plt.sca(ax3)
 imgmag = np.sqrt(imgDx**2 + imgDy**2)
 plt.imshow(imgmag, cmap='gray')
+plt.sca(ax4)
+plt.imshow(img, cmap='gray')
 plt.show()
 
+img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/gantrycrane.png')))
+
+[imgDx, imgDy] = gauss_module.gaussderiv(img, 4.0)
+plt.figure(9)
+ax1 = plt.subplot(1,4,1)
+ax2 = plt.subplot(1,4,2)
+ax3 = plt.subplot(1,4,3)
+ax4 = plt.subplot(1,4,4)
+plt.sca(ax1)
+plt.imshow(imgDx, cmap='gray')
+plt.sca(ax2)
+plt.imshow(imgDy, cmap='gray')
+plt.sca(ax3)
+imgmag = np.sqrt(imgDx**2 + imgDy**2)
+plt.imshow(imgmag, cmap='gray')
+plt.sca(ax4)
+plt.imshow(img, cmap='gray')
+plt.show()
 
