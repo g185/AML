@@ -22,47 +22,26 @@ import gauss_module
 #  img_gray - input image in grayscale format
 #  num_bins - number of bins in the histogram
 def normalized_hist(img_gray, num_bins):
+
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
-    list_img = []
-    for x in array(img_gray).flat:  # Converting to list 
-        list_img.append(x)
+    x = img_gray.flatten()
 
-    x = sorted(list_img)
+    step = 255/num_bins # Defining a step for building the edge bins respect to the chosen number of bins
 
-    ## Creating the second array with edge bins
+    hist = np.zeros(num_bins)
 
-    step = (max(x) - min(x))/num_bins # Defining a step for building the edge bins respect to the chosen number of bins
-    arr2 = np.zeros(num_bins + 1) # Initializing the second array that will define the bins
+    for i in x:
 
-    for i in range(num_bins):    # Building the edge bins
+        hist[int(i/step)] += 1
 
-        if num_bins == 1:
-            arr2 = [float(min(x)), float(max(x))]
-        else:
-            arr2[0] = float(min(x))
-            if int(i) != (num_bins - 1):
-                arr2[i+1] = arr2[i] + float(step)
-            else:
-                arr2[-1] = float(max(x))
+    print(hist)
+    hist = hist/hist.sum()
 
-    z = np.split(x,np.searchsorted(x,arr2)) ## Defining the first array respect to edge_bins (arr2)
+    bins = np.linspace(0, 255, num_bins + 1)
 
-    final1 = []
-
-    for i in range(len(z)):
-        final1.append(len(z[i]))
-
-    cut1 = final1[1::]
-    cut1[-2] = cut1[-2] + cut1[-1] 
-
-    final = np.asarray(cut1[:-1], dtype = np.int64)
-    
-    hists = final/final.sum()
-    bins = arr2
-    
-    return hists, bins
+    return hist, bins
 
 
 
@@ -120,15 +99,30 @@ def rg_hist(img_color_double, num_bins):
     assert img_color_double.dtype == 'float', 'incorrect image type'
 
 
-    #... (your code here)
+    bins = np.arange(0, 256, step=255/num_bins)
 
+    reshaping_img = np.reshape(img_color_double, (img_color_double.shape[0] * img_color_double.shape[1], img_color_double.shape[2]))
 
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
-    
-    
-    #... (your code here)
 
+    # Loop for each pixel i in the image 
+    for i in range(img_color_double.shape[0] * img_color_double.shape[1]):
+
+        # Increment the histogram bin which corresponds to the R,G,B value of the pixel i
+        coordinates = np.zeros(2, dtype=np.int)
+
+        #According to the new shape
+        for j in range(reshaping_img[i].shape[0] - 1): 
+
+            for k, m in list(enumerate(bins[:-1])):
+                if bins[k] <= reshaping_img[i][j] < bins[k + 1]:
+                    coordinates[j] = k
+
+        hists[coordinates[0], coordinates[1]] += 1
+
+    #Normalize the histogram such that its integral (sum) is equal 1
+    hists = hists / sum(hists.flatten())
 
     #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
@@ -150,15 +144,27 @@ def dxdy_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
+    bins = np.arange(0, 256, step=255/num_bins)
+    step = 255/num_bins # Defining a step for building the edge bins respect to the chosen number of bins
 
-    #... (your code here)
-
+    sigma = 3
+    img_dx, img_dy = gauss_module.gaussderiv(img_gray, sigma)
 
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
 
+    vec_dx = img_dx.flatten()
+    vec_dy = img_dy.flatten()
 
-    #... (your code here)
+
+    # Loop for each pixel i in the image 
+    for i in range(len(vec_dx)):
+        idx1 = [vec_dx[i]/step + 6 if vec_dx[i]>0 else (-vec_dx[i])/step]
+        idx2 = [vec_dy[i]/step + 6 if vec_dy[i]>0 else (-vec_dy[i])/step]
+        hists[idx1, idx2] += 1
+
+    #Normalize the histogram such that its integral (sum) is equal 1
+    hists = hists / sum(hists.flatten())
 
 
     #Return the histogram as a 1D vector

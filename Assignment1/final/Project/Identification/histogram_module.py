@@ -152,25 +152,56 @@ def rg_hist(img_color_double, num_bins):
 #  num_bins - number of bins used to discretize each dimension, total number of bins in the histogram should be num_bins^2
 #
 #  Note: you may use the function gaussderiv from the Filtering exercise (gauss_module.py)
+"""
 def dxdy_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
 
-    #... (your code here)
+    imgDx, imgDy = gauss_module.gaussderiv(img_gray, 3.0)
 
+    vecDx = np.matrix.flatten(np.clip(ImgDx, -6, 6))
+    vecDy = np.matrix.flatten(np.clip(ImgDy, -6, 6))
 
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
 
-
-    #... (your code here)
-
+    step = 13/num
 
     #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
     return hists
+"""
 
+def dxdy_hist(img_gray, num_bins):
+    assert len(img_gray.shape) == 2, 'image dimension mismatch'
+    assert img_gray.dtype == 'float', 'incorrect image type'
+
+    step = 13/num_bins # Defining a step for building the edge bins respect to the chosen number of bins
+
+    sigma = 3
+    img_dx, img_dy = gauss_module.gaussderiv(img_gray, sigma)
+    #Define a 2D histogram  with "num_bins^2" number of entries
+    hists = np.zeros((num_bins, num_bins))
+
+    vec_dx = img_dx.flatten()
+    vec_dx = np.clip(vec_dx, -6, 6)
+    vec_dy = img_dy.flatten()
+    vec_dy = np.clip(vec_dy, -6, 6)
+
+# Loop for each pixel i in the image 
+    for i in range(len(vec_dx)):
+        idx1 = [int(vec_dx[i]/step) + int(num_bins/2) if vec_dx[i]>0 else (-int(vec_dx[i]/step))]
+
+        idx2 = [int(vec_dy[i]/step) + int(num_bins/2) if vec_dy[i]>0 else (-int(vec_dy[i]/step))]
+        hists[idx1, idx2] += 1
+
+    #Normalize the histogram such that its integral (sum) is equal 1
+    hists = hists / sum(hists.flatten())
+
+    #Return the histogram as a 1D vector
+    hists = hists.reshape(hists.size)
+    return hists
 
 
 def is_grayvalue_hist(hist_name):
