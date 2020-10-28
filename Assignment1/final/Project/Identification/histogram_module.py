@@ -1,5 +1,9 @@
 import numpy as np
+from numpy import array
 from numpy import histogram as hist
+import matplotlib.pyplot as plt
+from PIL import Image
+import match_module
 
 
 
@@ -12,21 +16,32 @@ sys.path.insert(0,filteringpath)
 import gauss_module
 
 
-
 #  compute histogram of image intensities, histogram should be normalized so that sum of all values equals 1
 #  assume that image intensity varies between 0 and 255
 #
 #  img_gray - input image in grayscale format
 #  num_bins - number of bins in the histogram
 def normalized_hist(img_gray, num_bins):
+
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
+    x = img_gray.flatten()
 
-    #... (your code here)
+    step = 255/num_bins # Defining a step for building the edge bins respect to the chosen number of bins
 
+    hist = np.zeros(num_bins)
 
-    return hists, bins
+    for i in x:
+
+        hist[int(i/step)] += 1
+
+    print(hist)
+    hist = hist/hist.sum()
+
+    bins = np.linspace(0, 255, num_bins + 1)
+
+    return hist, bins
 
 
 
@@ -45,26 +60,38 @@ def rgb_hist(img_color_double, num_bins):
     assert len(img_color_double.shape) == 3, 'image dimension mismatch'
     assert img_color_double.dtype == 'float', 'incorrect image type'
 
-
-    #... (your code here)
-
-
-    #Define a 3D histogram  with "num_bins^3" number of entries
-    hists = np.zeros((num_bins, num_bins, num_bins))
     
-    # Loop for each pixel i in the image 
-    for i in range(img_color_double.shape[0]*img_color_double.shape[1]):
-        # Increment the histogram bin which corresponds to the R,G,B value of the pixel i
-        
-        #... (your code here)
-        pass
+    bins = np.arange(0, 256, step=255/num_bins)
+    
+    reshaping_img = np.reshape(img_color_double, (img_color_double.shape[0] * img_color_double.shape[1], img_color_double.shape[2]))
+    
+    
+    #Define a 3D histogram  with "num_bins^3" number of entries
+    hists = np.zeros((num_bins, num_bins, num_bins), dtype=np.int)
 
+    # Loop for each pixel i in the image 
+    for i in range(img_color_double.shape[0] * img_color_double.shape[1]):
+        
+        # Increment the histogram bin which corresponds to the R,G,B value of the pixel i
+        coordinates = np.zeros(3, dtype=np.int)
+
+        for j in range(reshaping_img[i].shape[0]):
+                        
+            for k, m in list(enumerate(bins[:-1])):
+                
+                if bins[k] <= reshaping_img[i][j] < bins[k + 1]:
+                    coordinates[j] = k
+                                        
+        
+                
+        hists[coordinates[0], coordinates[1], coordinates[2]] += 1
 
     #Normalize the histogram such that its integral (sum) is equal 1
-    #... (your code here)
+    hists = hists / sum(hists.flatten())
 
     #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
+
     return hists
 
 
@@ -83,16 +110,31 @@ def rg_hist(img_color_double, num_bins):
     assert len(img_color_double.shape) == 3, 'image dimension mismatch'
     assert img_color_double.dtype == 'float', 'incorrect image type'
 
-
-    #... (your code here)
-
-
+        
+    bins = np.arange(0, 256, step=255/num_bins)
+    
+    reshaping_img = np.reshape(img_color_double, (img_color_double.shape[0] * img_color_double.shape[1], img_color_double.shape[2]))
+    
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
     
-    
-    #... (your code here)
+    # Loop for each pixel i in the image 
+    for i in range(img_color_double.shape[0] * img_color_double.shape[1]):
+        
+        # Increment the histogram bin which corresponds to the R,G,B value of the pixel i
+        coordinates = np.zeros(2, dtype=np.int)
 
+        #According to the new shape
+        for j in range(reshaping_img[i].shape[0] - 1): 
+                        
+            for k, m in list(enumerate(bins[:-1])):
+                if bins[k] <= reshaping_img[i][j] < bins[k + 1]:
+                    coordinates[j] = k
+        
+        hists[coordinates[0], coordinates[1]] += 1
+
+    #Normalize the histogram such that its integral (sum) is equal 1
+    hists = hists / sum(hists.flatten())
 
     #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
