@@ -74,18 +74,19 @@ def show_neighbors(model_images, query_images, dist_type, hist_type, num_bins):
 
     num_nearest = 5  # show the top-5 neighbors
     
+    plt.figure()
     top_k = np.zeros((len(query_images), 5), dtype = int)
 
     for i in range(len(query_images)):
         
         top_k[i] = np.argsort(D[i])[:5]
         
-        plt.figure()
-        plt.subplot(1,6,1); plt.imshow(np.array(Image.open(query_images[i])), vmin=0, vmax=255); plt.title(query_images[i])
-        plt.subplot(1,6,2); plt.imshow(np.array(Image.open(model_images[top_k[i][0]]))); plt.title(model_images[top_k[i][0]])
-        plt.subplot(1,6,3); plt.imshow(np.array(Image.open(model_images[top_k[i][1]]))); plt.title(model_images[top_k[i][1]])
-        plt.subplot(1,6,4); plt.imshow(np.array(Image.open(model_images[top_k[i][2]]))); plt.title(model_images[top_k[i][2]])
-        plt.subplot(1,6,5); plt.imshow(np.array(Image.open(model_images[top_k[i][3]]))); plt.title(model_images[top_k[i][3]])
-        plt.subplot(1,6,6); plt.imshow(np.array(Image.open(model_images[top_k[i][4]]))); plt.title(model_images[top_k[i][4]])
-        plt.show()
+        plt.subplot(len(query_images),6,1 + i*6); plt.imshow(np.array(Image.open(query_images[i])), vmin=0, vmax=255); plt.title("Q" + i)
+        plt.subplot(len(query_images),6,2 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][0]]))); plt.title(model_images[top_k[i][0]])
+        plt.subplot(len(query_images),6,3 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][1]]))); plt.title(model_images[top_k[i][1]])
+        plt.subplot(len(query_images),6,4 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][2]]))); plt.title(model_images[top_k[i][2]])
+        plt.subplot(len(query_images),6,5 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][3]]))); plt.title(model_images[top_k[i][3]])
+        plt.subplot(len(query_images),6,6 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][4]]))); plt.title(model_images[top_k[i][4]])
+    
+    plt.show()
 

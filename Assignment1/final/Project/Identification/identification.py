@@ -10,7 +10,7 @@ import match_module
 import rpc_module
 
 
-
+"""
 def rgb2gray(rgb):
 
     r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
@@ -27,7 +27,8 @@ def rgb2gray(rgb):
 
 img_color = np.array(Image.open('./model/obj100__0.png'))
 img_gray = rgb2gray(img_color.astype('double'))
-
+"""
+"""
 plt.figure(1)
 plt.subplot(1,3,1)
 plt.imshow(img_color)
@@ -155,9 +156,9 @@ print('%s-%s, %s-%s, %s-%s, %s-%s'%('chi2', 'grayvalue', 'chi2', 'rgb', 'chi2', 
 
 
 
+"""
 
-
-
+"""
 ## Find best match (Question 3.a)
 
 with open('model.txt') as fp:
@@ -168,18 +169,16 @@ with open('query.txt') as fp:
     query_images = fp.readlines()
 query_images = [x.strip() for x in query_images] 
 
-dist_type = 'intersect';
-hist_type = 'rg';
-num_bins = 30;
+dist_type = 'intersect'
+hist_type = 'rg'
+num_bins = 30
 
 [best_match, D] = match_module.find_best_match(model_images, query_images, dist_type, hist_type, num_bins)
-
 
 
 ## visualize nearest neighbors (Question 3.b)
 query_images_vis = [query_images[i] for i in np.array([0,4,9])]
 match_module.show_neighbors(model_images, query_images_vis, dist_type, hist_type, num_bins)
-
 
 
 ## compute recognition percentage (Question 3.c)
@@ -190,7 +189,7 @@ print('number of correct matches: %d (%f)\n'% (num_correct, 1.0 * num_correct / 
 
 
 
-
+"""
 
 ## plot recall_precision curves (Question 4)
 
@@ -202,7 +201,7 @@ with open('query.txt') as fp:
     query_images = fp.readlines()
 query_images = [x.strip() for x in query_images] 
 
-num_bins = 20;
+num_bins = 20
 
 
 plt.figure(8)
@@ -210,15 +209,14 @@ rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l
 plt.title('RG histograms')
 plt.show()
 
-
+print("a")
 plt.figure(9)
 rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rgb', num_bins // 2, ['r', 'g', 'b'])
 plt.title('RGB histograms')
 plt.show()
 
-
+print("a")
 plt.figure(10)
 rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'dxdy', num_bins, ['r', 'g', 'b'])
 plt.title('dx/dy histograms')
 plt.show()
-

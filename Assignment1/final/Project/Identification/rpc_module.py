@@ -23,7 +23,6 @@ def plot_rpc(D, plot_color):
     assert(num_images == num_queries), 'Distance matrix should be a square matrix'
     
     labels = np.diag([1]*num_images)
-      
     d = D.reshape(D.size)
     l = labels.reshape(labels.size)
      
@@ -31,15 +30,25 @@ def plot_rpc(D, plot_color):
     d = d[sortidx]
     l = l[sortidx]
     
-    tp = 0
-    #... (your code here)
+    tp = 1
+    fp = 0
+    fn = 0
+
+    tresh = np.linspace(0,1,20)
     
-    for idt in range(len(d)):
-        tp += l[idt]
-        #... (your code here)
-        
+    for t in tresh:
+
+        for idt in range(len(d)):
+            tp += 1 if l[idt] == 1 and d[idt] < t else 0
+            fp += 1 if l[idt] != 1 and d[idt] < t else 0
+            fn += 1 if l[idt] == 1 and d[idt] > t else 0
+            
+            
         #Compute precision and recall values and append them to "recall" and "precision" vectors
-        #... (your code here)
+        recall.append(tp/(tp+fn))
+        precision.append(tp/(tp+fp))
+        tp, fp, fn = 1,0,0     
+
     
     plt.plot([1-precision[i] for i in range(len(precision))], recall, plot_color+'-')
 
@@ -55,7 +64,7 @@ def compare_dist_rpc(model_images, query_images, dist_types, hist_type, num_bins
 
         plot_rpc(D, plot_colors[idx])
     
-
+    print("as")
     plt.axis([0, 1, 0, 1]);
     plt.xlabel('1 - precision');
     plt.ylabel('recall');
