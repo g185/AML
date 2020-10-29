@@ -48,17 +48,17 @@
 %	ASSIGNMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{Assignment 1 -\\ Image Filtering and Object Identification} % Assignment title
+\title{Assignment 1} % Assignment title
 
 \author{Giuliano  1234567, Gabriele Giannotta 1909375, Mario Dhimitri 1234567 } % Student name
 
 \date{October 30th, 2020} % Due date
 
-\institute{Sapienza Università di Roma \\ Data Science} % Institute or school name
+\institute{Sapienza Università di Roma \\ Data Science} % Institute 
 
 \class{Advanced Machine Learning} % Course or class name
 
-\professor{Fabio Galasso} % Professor or teacher in charge of the assignment
+\professor{Fabio Galasso} % Professor 
 
 %----------------------------------------------------------------------------------------
 
@@ -74,10 +74,48 @@
 
 Write here your report
 
+
+\newpage
 \section*{Report 2 - Object Identification}
 
-Write here your report
 
+In order to find the best combination to get a better result, we computed the recognition rate for all the possible combinations of the three type of distance (intersect, l2, chi2) with respect to the histogram functions (rgb, rg, dxdy), considering 6 different number of bins (5,10,15,20,30,50) for each combination. After that, the obtained results were inserted in a dataframe and analyzed with Pandas tools. \\
+From the 54 combinations analyzed, the following results were obtained:\\ \\
+
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=0.9in]{img/best_combination.png}
+         \caption{Best Combination}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=0.9in]{img/worst_combination.png}
+         \caption{Worst Combination}
+	\end{subfigure}
+
+\end{figure*}
+
+
+The best combination found is: \{Histogram: rgb; Distance: Intersect; Number of Bins: 15\}, with a number of matches of 81 out of 89 ( Recognition Rate = 0.91 ).\\ 
+
+The worst combination found is: \{Histogram: rgb; Distance: chi2; Number of Bins: 50\}, with a number of matches of 29 out of 89 ( Recognition Rate = 0.32 ).\\
+
+Finally, looking specifically at the distance type, we noticed that on average the intersect distance was the best for each type of histogram.
+The average is calculated taking into account the six test cases \(num_bins = 5, 10, 15, 20, 30, 50\).
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[height=2.8in]{img/best_dist.png}
+     \caption{Best Distance}
+\end{figure*}
+
+
+
+\newpage
 \section*{Report 3 - Performance Evaluation}
 
 Write here your report
