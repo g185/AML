@@ -152,26 +152,6 @@ def rg_hist(img_color_double, num_bins):
 #  num_bins - number of bins used to discretize each dimension, total number of bins in the histogram should be num_bins^2
 #
 #  Note: you may use the function gaussderiv from the Filtering exercise (gauss_module.py)
-"""
-def dxdy_hist(img_gray, num_bins):
-    assert len(img_gray.shape) == 2, 'image dimension mismatch'
-    assert img_gray.dtype == 'float', 'incorrect image type'
-
-
-    imgDx, imgDy = gauss_module.gaussderiv(img_gray, 3.0)
-
-    vecDx = np.matrix.flatten(np.clip(ImgDx, -6, 6))
-    vecDy = np.matrix.flatten(np.clip(ImgDy, -6, 6))
-
-    #Define a 2D histogram  with "num_bins^2" number of entries
-    hists = np.zeros((num_bins, num_bins))
-
-    step = 13/num
-
-    #Return the histogram as a 1D vector
-    hists = hists.reshape(hists.size)
-    return hists
-"""
 
 def dxdy_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
