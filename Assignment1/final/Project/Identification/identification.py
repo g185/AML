@@ -3,14 +3,11 @@ import numpy as np
 from PIL import Image
 from numpy import histogram as hist  # call hist, otherwise np.histogram
 import matplotlib.pyplot as plt
-
 import histogram_module
 import dist_module
 import match_module
 import rpc_module
 
-
-"""
 def rgb2gray(rgb):
 
     r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
@@ -18,17 +15,10 @@ def rgb2gray(rgb):
 
     return gray
 
-
-
-
-
-
 ## gray-value histograms (Question 2.a)
 
 img_color = np.array(Image.open('./model/obj100__0.png'))
 img_gray = rgb2gray(img_color.astype('double'))
-"""
-"""
 plt.figure(1)
 plt.subplot(1,3,1)
 plt.imshow(img_color)
@@ -110,8 +100,8 @@ print('distance functions:', distance_types)
 hist_types = ['grayvalue', 'rgb', 'rg', 'dxdy']
 print('histogram types:', hist_types)
 
-num_bins_color = 30;
-num_bins_gray = 90;
+num_bins_color = 30
+num_bins_gray = 90
 
 for img1_file in image_files1:
     img1_color = np.array(Image.open(img1_file))
@@ -186,11 +176,6 @@ match_module.show_neighbors(model_images, query_images_vis, dist_type, hist_type
 num_correct = sum( best_match == range(len(query_images)) )
 print('number of correct matches: %d (%f)\n'% (num_correct, 1.0 * num_correct / len(query_images)))
 
-
-
-
-"""
-
 ## plot recall_precision curves (Question 4)
 
 with open('model.txt') as fp:
@@ -203,20 +188,17 @@ query_images = [x.strip() for x in query_images]
 
 num_bins = 20
 
-
 plt.figure(8)
 rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rg', num_bins, ['r', 'g', 'b'])
 plt.title('RG histograms')
 plt.show()
 
-print("a")
 plt.figure(9)
 rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rgb', num_bins // 2, ['r', 'g', 'b'])
 plt.title('RGB histograms')
 plt.show()
 
-print("a")
-plt.figure(10)
+plt.figure(11)
 rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'dxdy', num_bins, ['r', 'g', 'b'])
 plt.title('dx/dy histograms')
 plt.show()
