@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from scipy.signal import convolve2d as conv2
 import scipy
 
-
 """
 Gaussian function taking as argument the standard deviation sigma
 The filter should be defined for all integer values x in the range [-3sigma,3sigma]
@@ -22,6 +21,7 @@ def gauss_kernel(sigma):
     Gx, _ = gauss(sigma)
     kernel = np.outer(Gx , Gx)
     return kernel
+
 
 """
 Implement a 2D Gaussian filter, leveraging the previous gauss.
@@ -45,8 +45,6 @@ def gaussianfilter_two_convolutions(im2d, sigma):
     return conv2(conv2(im2d, Gx, 'same'), Gx.T, 'same')
 
 
-
-
 """
 Gaussian derivative function taking as argument the standard deviation sigma
 The filter should be defined for all integer values x in the range [-3sigma,3sigma]
@@ -56,7 +54,6 @@ The function should return the Gaussian derivative values Dx computed at the ind
 def gaussdx(sigma):
     r = range(-int(3*sigma), int(3*sigma) + 1)
     return np.array([1 / (sigma**3 * sqrt(2*pi)) * x * exp(-float(x)**2/(2*sigma**2)) for x in r]), r
-
 
 
 def gaussderiv(im2d, sigma):
@@ -70,4 +67,3 @@ def gaussderiv(im2d, sigma):
     imgDy = conv2(conv2(im2d, Dx, 'same'), Gx.T, 'same')
 
     return imgDx, imgDy
-
