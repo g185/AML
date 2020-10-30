@@ -94,17 +94,22 @@ Then, applying different filter combinations, we obtained the following results:
 
 \begin{enumerate} 
  \item First Gx, then $\mathrm{Gx^{T}}$
-		 \\ Applying this filter combination we see normal result. In this case we can see how the gaussian distribution is respected in relation with the filtering of a point in the center of the image. In fact the distribution is more dense in the center and then is less dense when we go far away.
+	\\In the first figure we can observe a two dimensional gaussian distribution obtained applying separately two gaussian filter vectors. It is possible because convolution is a linear operation and gaussian filter is separable. The gaussian distribution can be observed in the picture as we can see how distribution is less dense as we move far from the central point of the original image.
+
  \item First Gx, then $\mathrm{Dx^{T}}$
-		\\Now we see another important result. applied to the original point are two filters. One is the gaussian filter the other is the gaussian derivative filter. 
+	\\Here we apply a 1D gaussian filter to smooth the original signal along x-axis and we apply a gaussian derivative along the y-axis. In this way we reproduce the waveform of the gaussian derivative and emphasize the horizontal edges of the original picture. 
+
  \item First $\mathrm{Dx^{T}}$, then Gx
-		\\ Result is the same, commutative property.
+	\\This figure is identical to the second one since convolution is a linear operator and it doesn’t matter the order for which we apply the gaussian filters. 
+
  \item First Dx, then $\mathrm{Dx^{T}}$
-		\\ Now is a derivative with a derivative vertical wave and then horizontal wave. So, it's like having two waves.
+	\\ This figure is obtained applying two gaussian derivative filters along the two axis. The result is the intersection of the two waveform pictures, as a gradient that identifies edges with different inclinations.
+
  \item First Dx, then $\mathrm{Gx^{T}}$
-		\\ In this case is not transposed, for this reason it's not vertical but horizontal.
+	\\ This  picture is formed by applying a 1D gaussian derivative filter along the x-axis and a simple gaussian filter along the y axis.  In this way we reproduce the waveform of the gaussian derivative and emphasize the vertical edges instead.
+
  \item First $\mathrm{Gx^{T}}$, then Dx
-		\\ Same as point  5.
+	\\This figure is identical to the fifth one since convolution is a linear operator and it doesn’t matter the order for which we apply the gaussian filters. 
  \end{enumerate}
 
 
@@ -148,7 +153,7 @@ After converting them in greyscale, from the function gaussderiv we applied the 
 	\caption{Horizontal smoothing and vertical derivative}
 \end{figure*}
 
-
+\newpage
 
 \begin{figure*}[h!]
     \centering
@@ -168,11 +173,7 @@ After converting them in greyscale, from the function gaussderiv we applied the 
 
 
 In Fig.4 it's easy to notice that the horizontal edges are highlighted and the vertical ones are ignored. While in Fig. 5 we can see the opposite: vertical edges are highlighted and the horizontal ones ignored. \\
-The main reson for using smoothing before applying derivative filter is to reduce the noise and 
-
-
-
-
+The main reason for smoothing an image before applying derivative filter is to reduce the noise and the number of spurious edges, cutting all the high frequencies that charatcerize the image.
 
 \newpage
 \section*{Report 2 - Object Identification}
@@ -204,7 +205,7 @@ The best combination found is: \{Histogram: rgb; Distance: Intersect; Number of 
 The worst combination found is: \{Histogram: rgb; Distance: chi2; Number of Bins: 50\}, with a number of matches of 29 out of 89 ( Recognition Rate = 0.32 ).\\
 
 Finally, looking specifically at the distance type, we noticed that on average the intersect distance was the best for each type of histogram.
-The average is calculated taking into account the six test cases \(num_bins = 5, 10, 15, 20, 30, 50\).
+The average is obtained taking into account the six test cases (num bins = 5, 10, 15, 20, 30, 50).
 
 \begin{figure*}[h!]
     \centering
@@ -272,7 +273,7 @@ Now let's take a look at the performace of the distances in \textbf{RGB histogra
      \end{subfigure}
         \caption{RGB histograms}
         \label{fig:three graphs}
-\end{figure} \\
+\end{figure}\newpage
 The final histogram is the \textbf{dxdy histogram.} In this case we notice a slightly similar performance from all the measurements, but as well in this case the best performing distance is \textcolor{ForestGreen}{intersect} 
 \begin{figure}[h!]
      \centering
