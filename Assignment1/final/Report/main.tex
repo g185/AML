@@ -34,7 +34,9 @@
 \usepackage{caption}
 \usepackage{wrapfig}
 \usepackage{tabu}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{floatflt}
+
 \usepackage{graphicx} % Required for including images
 
 \usepackage{booktabs} % Required for better horizontal rules in tables
@@ -50,7 +52,7 @@
 
 \title{Assignment 1} % Assignment title
 
-\author{Giuliano  1234567, Gabriele Giannotta 1909375, Mario Dhimitri 1910181 } % Student name
+\author{Giuliano Martinelli 1915652, Gabriele Giannotta 1909375, Mario Dhimitri 1910181 } % Student name
 
 \date{October 30th, 2020} % Due date
 
@@ -118,7 +120,86 @@ The average is calculated taking into account the six test cases \(num_bins = 5,
 \newpage
 \section*{Report 3 - Performance Evaluation}
 
-Write here your report
+For this exercise, after implementing the \textbf{rpc\_module} functions, we plotted the RPC curves for different histogram types, distances and number of bins. After experimenting with the number of bins, we got different results regarding the distances. In the following picture we are going to see the plots for \textbf{RG histogram} with 10, 20 and 30 bins.\\ \\
+\begin{figure}[h!]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/RG_10.JPG}
+         \caption{RG with 10 bins}
+         \label{fig:y equals x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/RG_20.JPG}
+         \caption{RG with 20 bins}
+         \label{fig:three sin x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/RG_30.JPG}
+         \caption{RG with 30 bins}
+         \label{fig:five over x}
+     \end{subfigure}
+        \caption{RG histograms}
+        \label{fig:three graphs}
+\end{figure}
+We notice that \textcolor{ForestGreen}{intersect} performs better than \textcolor{red}{chi2} and \textcolor{blue}{l2} in both of the cases for RG histogram.\\ 
+Now let's take a look at the performace of the distances in \textbf{RGB histograms} with 10, 20 and 30 bins. We notice nearly the same result as the previous case: \textcolor{ForestGreen}{intersect} performs better than \textcolor{red}{chi2} and \textcolor{blue}{l2} in both of the cases for RGB histogram.\\
+\begin{figure}[h!]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/RGB_10.JPG}
+         \caption{RGB with 10 bins}
+         \label{fig:y equals x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/RGB_20.JPG}
+         \caption{RGB with 20 bins}
+         \label{fig:three sin x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/RGB_30.JPG}
+         \caption{RGB with 30 bins}
+         \label{fig:five over x}
+     \end{subfigure}
+        \caption{RGB histograms}
+        \label{fig:three graphs}
+\end{figure} \\
+The final histogram is the \textbf{dxdy histogram.} In this case we notice a slightly similar performance from all the measurements, but as well in this case the best performing distance is \textcolor{ForestGreen}{intersect} 
+\begin{figure}[h!]
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/dxdy_10.JPG}
+         \caption{DxDy with 10 bins}
+         \label{fig:y equals x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/dxdy_20.JPG}
+         \caption{DxDy with 20 bins}
+         \label{fig:three sin x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/plots/dxdy_30.JPG}
+         \caption{DxDy with 30 bins}
+         \label{fig:five over x}
+     \end{subfigure}
+        \caption{DxDy histograms}
+        \label{fig:three graphs}
+\end{figure} \\
+
 
 
 
