@@ -73,8 +73,102 @@
 %----------------------------------------------------------------------------------------
 
 \section*{Report 1 - Image Filtering}
+\section { Question 1D}
 
-Write here your report
+In this first report, our purpose is to check the effects of convolution with different pairs of kernels. To start, we consider a sample image in which only the central pixel has a non-zero value.
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[height=2in]{img/1d/sample1.png}
+     \caption{Sample Image}
+\end{figure*}
+
+Then, applying different filter combinations, we obtained the following results:
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[height=2in]{img/1d/fig2.jpg}
+     \caption{Sample Image after filter combinations}
+\end{figure*}
+
+
+\begin{enumerate} 
+ \item First Gx, then $\mathrm{Gx^{T}}$
+		 \\ Applying this filter combination we see normal result. In this case we can see how the gaussian distribution is respected in relation with the filtering of a point in the center of the image. In fact the distribution is more dense in the center and then is less dense when we go far away.
+ \item First Gx, then $\mathrm{Dx^{T}}$
+		\\Now we see another important result. applied to the original point are two filters. One is the gaussian filter the other is the gaussian derivative filter. 
+ \item First $\mathrm{Dx^{T}}$, then Gx
+		\\ Result is the same, commutative property.
+ \item First Dx, then $\mathrm{Dx^{T}}$
+		\\ Now is a derivative with a derivative vertical wave and then horizontal wave. So, it's like having two waves.
+ \item First Dx, then $\mathrm{Gx^{T}}$
+		\\ In this case is not transposed, for this reason it's not vertical but horizontal.
+ \item First $\mathrm{Gx^{T}}$, then Dx
+		\\ Same as point  5.
+ \end{enumerate}
+
+
+\section { Question 1E}
+
+Given the two original images graf.png and gantrycrane.png:
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=1.4in]{img/1e/graf.png}
+
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[height=1.4in]{img/1e/gantrycrane.png}
+
+	\end{subfigure}
+	\caption{Original Images graf.png and gantrycrane.png}
+\end{figure*}
+
+
+After converting them in greyscale, from the function gaussderiv we applied the filter combination of Gaussian smoothing vertically and derivative of Gaussian horizontally \(Fig. 4\) and the combination of Gaussian smoothing horizontally and derivative of Gaussian vertically \(Fig. 5\):
+
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=2in]{img/1e/graf1.png}
+
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[height=2in]{img/1e/gantry1.png}
+
+	\end{subfigure}
+	\caption{Horizontal smoothing and vertical derivative}
+\end{figure*}
+
+
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=2in]{img/1e/graf2.png}
+
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[height=2in]{img/1e/gantry2.png}
+
+	\end{subfigure}
+	\caption{Vertical smoothing and horizontal derivative}
+\end{figure*}
+
+
+
+
 
 
 \newpage
@@ -111,9 +205,12 @@ The average is calculated taking into account the six test cases \(num_bins = 5,
 
 \begin{figure*}[h!]
     \centering
-    \includegraphics[height=2.8in]{img/best_dist.png}
+    \includegraphics[height=2.3in]{img/best_dist.png}
      \caption{Best Distance}
 \end{figure*}
+
+
+
 
 
 
