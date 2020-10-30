@@ -19,7 +19,7 @@ def gauss(sigma):
 
 #returns gaussian kernel on sigma
 def gauss_kernel(sigma):
-    Gx, x= gauss(sigma)
+    Gx, _ = gauss(sigma)
     kernel = np.outer(Gx , Gx)
     return kernel
 
@@ -40,7 +40,7 @@ def gaussianfilter_kernel(im2d, sigma):
 
 #implementation using two gaussian convolutions
 def gaussianfilter_two_convolutions(im2d, sigma):
-    Gx, x = gauss(sigma)
+    Gx, _ = gauss(sigma)
     Gx = Gx.reshape(1, Gx.size)
     return conv2(conv2(im2d, Gx, 'same'), Gx.T, 'same')
 

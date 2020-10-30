@@ -30,7 +30,7 @@ gauss_module.gauss_kernel(sigma)
 import time
 
 
-img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
+img = rgb2gray(np.array(Image.open('./graf.png')))
 start = time.time()
 smooth_img = gauss_module.gaussianfilter_kernel(img, sigma)
 print(time.time() - start)
@@ -46,26 +46,6 @@ plt.imshow(img, cmap='gray', vmin=0, vmax=255)
 plt.sca(ax2)
 plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
 plt.show()
-
-"""
-TESTING
-img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
-smooth_img = gauss_module.gaussianfilter_kernel(img, sigma)
-expected = gauss_module.gaussianfilter_two_convolutions(img, sigma)
-smooth_img_fast=gauss_module.gaussianfilter_fast_impl(img, sigma)
-plt.figure(2)
-ax1 = plt.subplot(1,3,1)
-ax2 = plt.subplot(1,3,2)
-ax3 = plt.subplot(1,3,3)
-plt.sca(ax1)
-plt.imshow(expected, cmap='gray', vmin=0, vmax=255)
-plt.sca(ax2)
-plt.imshow(smooth_img, cmap='gray', vmin=0, vmax=255)
-plt.sca(ax3)
-plt.imshow(smooth_img_fast, cmap='gray', vmin=0, vmax=255)
-plt.show()
-
-"""
 
 ## function gaussdx (Question 1.c)
 
@@ -111,7 +91,7 @@ plt.imshow(conv2(conv2(img_imp, Gx.T, 'same'), Dx, 'same') , cmap='gray')
 plt.show()
 
 ## function gaussderiv (Question 1.e)
-img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/graf.png')))
+img = rgb2gray(np.array(Image.open('./graf.png')))
 
 [imgDx, imgDy] = gauss_module.gaussderiv(img, 7.0)
 
@@ -131,7 +111,7 @@ plt.sca(ax4)
 plt.imshow(img, cmap='gray')
 plt.show()
 
-img = rgb2gray(np.array(Image.open('C:/Users/giuli/Downloads/Assignment1/Filtering/gantrycrane.png')))
+img = rgb2gray(np.array(Image.open('./gantrycrane.png')))
 
 [imgDx, imgDy] = gauss_module.gaussderiv(img, 4.0)
 plt.figure(9)
