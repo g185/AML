@@ -81,7 +81,7 @@ def show_neighbors(model_images, query_images, dist_type, hist_type, num_bins):
         
         top_k[i] = np.argsort(D[i])[:5]
         
-        plt.subplot(len(query_images),6,1 + i*6); plt.imshow(np.array(Image.open(query_images[i])), vmin=0, vmax=255); plt.title("Q" + i)
+        plt.subplot(len(query_images),6,1 + i*6); plt.imshow(np.array(Image.open(query_images[i])), vmin=0, vmax=255);
         plt.subplot(len(query_images),6,2 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][0]]))); plt.title(model_images[top_k[i][0]])
         plt.subplot(len(query_images),6,3 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][1]]))); plt.title(model_images[top_k[i][1]])
         plt.subplot(len(query_images),6,4 + i*6); plt.imshow(np.array(Image.open(model_images[top_k[i][2]]))); plt.title(model_images[top_k[i][2]])
