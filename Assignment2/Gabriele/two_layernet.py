@@ -92,9 +92,22 @@ class TwoLayerNet(object):
         #############################################################################
         
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+        
+        def relu(u):
+            out = np.where(u<0, 0, u)
+            return out
+            
+        def softmax(u):
+            return np.exp(u).T / np.sum(np.exp(u), axis = 1)
+            
+        
+        z2 = np.dot(X, W1) + b1 # First hidden layer
+        a2 = relu(z2)
+        z3 = np.dot(a2, W2) + b2 # Second hidden layer
         
 
+        scores = softmax(z3).T
+        
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -119,8 +132,11 @@ class TwoLayerNet(object):
         
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         
+        ce_loss = - np.log(scores)[np.arange(scores.shape[0]), y]
         
+        loss = (1 / N) * np.sum(ce_loss) + reg * (np.power(np.linalg.norm(W1), 2) + np.power(np.linalg.norm(W2), 2))
         
+                    
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -136,8 +152,8 @@ class TwoLayerNet(object):
 
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         
-        
 
+        
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
