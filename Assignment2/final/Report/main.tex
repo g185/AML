@@ -166,15 +166,48 @@ $$
 \frac{\partial \tilde{J}}{\partial W^{(2)}}=\sum_{i=1}^{N} \frac{1}{N}\left(\psi\left(z_{i}^{(3)}\right)-\delta_{i y_{i}}\right) a_{i}^{(2)^{T}}+2 \lambda W^{(2)}
 $$
 \end{gathered}
-\end{equation}\ \\
+\end{equation}
 
-We can do the following:\\ \\
+We can do the following:\\
 
 $f(x) = \lambda\left(\left\|W^{(1)}\right\|_{2}^{2}+\left\|W^{(2)}\right\|_{2}^{2}\right) = \lambda\left(\left\|W^{(1)}\right\|_{2}^{2}\right) + \lambda\left(\left\|W^{(2)}\right\|_{2}^{2}\right) = $\\ \\
 
 $\frac{f}{W_2} = 0 + \lambda \frac{\partial(\sum\sum(W_2)^2)}{\partial W_2} = 2\lambda W_2$\\ \\
 
 $\frac{\partial J}{\partial W_2} = \frac{1}{N} (\psi(z_3) - 1) a_{2}^{T} + 2\lambda W_2$
+
+
+\newpage
+\section* {2. c}
+
+We now derive the expressions for the derivatives of the regularized loss in Eq. (3) w.r.t. W(1), b(1), b(2):\\
+
+$\frac{\partial J}{\partial z_{i}^{(3)}} = - \frac{1}{N} (\psi (z_{j}^{(i)}) - \bigtriangleup_i$ \\ \\
+
+$z_{i}^{(3)} = a_{i}^{(3)} W^2 + b^2$ \\ \\
+
+$\frac {\partial J}{\partial W_2} = \frac {1}{N} (\psi (z_{ji} - \bigtriangleup_i) a_{2i} $ \\ \\
+
+$\frac {\partial J}{\partial a_{2i}} = \frac{1}{N} (\psi (z_{ij} - \bigtriangleup_i) W_2$ \\	\\
+
+$\frac {\partial J}{\partial b} = \frac {\partial J}{\partial z_{ji}} = \frac{1}{N} (\psi(z_{jn}) - \bigtriangleup_i)$ \\ \\
+
+$\frac {\partial J}{\partial z_{2i}} = \frac {\partial J}{\partial a_{2i}} \frac {\partial J_{2i}}{\partial z_{2i}} \rightarrow a_{2i}\left\{\begin{array}{ll}
+0, & \text { if } z_{2i}<0 \\
+z_{2i}, & \text { if } z_{2i}\geq0
+\end{array}\right.
+\rightarrow \frac {\partial a_{2i}}{\partial z_{2i}} =
+\left\{\begin{array}{ll}
+0, & \text { if } z_{2i}<0 \\
+i, & \text { if } z_{2i}\geq0
+\end{array}\right.
+$ \\ \\
+
+$\frac {\partial J}{\partial z_{2i}} = \frac{1}{N} (\psi(z_{2i}) - \bigtriangleup_i) \delta_i$ \\ \\
+
+$\frac {\partial J}{\partial b_i} = \frac {\partial J}{\partial z_{2i}}$ \\ \\
+
+$\frac {\partial J}{\partial W_1} = \frac {\partial J}{\partial z_{2i}} a_{i}^{(i)} \ \ \  \|\frac {\partial J}{\partial a_i} = \frac {\partial J}{\partial z_{2i}}$
 
 
 
