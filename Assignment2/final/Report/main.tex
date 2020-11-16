@@ -118,9 +118,9 @@ $ a_{i}^{(3)} = f(x) = \psi(z_{i}^{(3)}),\ \ \ \ \ \ x = z_{y_{i}}^{(3)}$ \\
 
 $ \frac{\partial a_{i}^{(3)}}{\partial z_{i}^{(3)}} = \psi(z_{i}^{(3)})_{y_{i}} (1 - \psi(z_{i}^{(3)})_{y_{i}}) $ \\
 
-\item $\frac{\partial J}{\partial z_{i}^{(3)}} = \frac{\partial J}{\partial a_{i}^{(3)}} \frac{\partial a_{i}^{(3)}}{\partial z_{i}^{(3)}} = 1 (1 - \psi(z_{i}^{(3)})_{y_{i}}) = \frac{1}{N} (\psi(z_{i}^{(3)})_{y_{i}} - 1)$ \\
+\item $\frac{\partial J}{\partial z_{i}^{(3)}} = \frac{\partial J}{\partial a_{i}^{(3)}} \frac{\partial a_{i}^{(3)}}{\partial z_{i}^{(3)}} = - \frac{1}{N \psi(z_{i}^{(3)})_{y_{i}}} \ \psi(z_{i}^{(3)})_{y_{i}} (1 - \psi(z_{i}^{(3)})_{y_{i}}) = \frac{1}{N} (\psi(z_{i}^{(3)})_{y_{i}} - 1)$ \\
 
-This because $\frac{\partial J}{\partial a_{i}^{(3)}}$ is the upstream gradient.
+This because $\frac{\partial J}{\partial a_{i}^{(3)}}$ is the upstream gradient and $\frac{\partial a_{i}^{(3)}}{\partial z_{i}^{(3)}}$ is the local gradient.
 
 \end{enumerate}
 
@@ -174,14 +174,14 @@ $f(x) = \lambda\left(\left\|W^{(1)}\right\|_{2}^{2}+\left\|W^{(2)}\right\|_{2}^{
 
 $\frac{f}{W_2} = 0 + \lambda \frac{\partial(\sum\sum(W_2)^2)}{\partial W_2} = 2\lambda W_2$\\ \\
 
-$\frac{\partial J}{\partial W_2} = \frac{1}{N} (\psi(z_3) - 1) a_{2}^{T} + 2\lambda W_2$
+$\frac{\partial J}{\partial W_2} = \frac{1}{N} (\psi(z_{i}^{(3)}) - 1) a_{2}^{T} + 2\lambda W_2$
 
 
 \newpage
 \section* {2. c}
 
-We now derive the expressions for the derivatives of the regularized loss in Eq. (3) w.r.t. W(1), b(1), b(2):\\
-
+We now derive the expressions for the derivatives of the regularized loss in Eq. (3) w.r.t. W(1), b(1), b(2),\\
+recalling that we used $\bigtriangleup_i$ to refer to the Kronecker delta. \\
 
 \begin{itemize}
 
@@ -203,12 +203,12 @@ Using the chain rule:
 0, & \text { if } z_{i}^{(2)}<0 \\
 z_{i}^{(2)}, & \text { if } z_{i}^{(2)}\geq0
 \end{array}\right.
-\rightarrow \frac {\partial a_{i}^{(2)}}{\partial z_{i}^{(2)}} =
+\rightarrow \frac {\partial a_{i}^{(2)}}{\partial z_{i}^{(2)}} = \delta_i = 
 \left\{\begin{array}{ll}
 0, & \text { if } z_{i}^{(2)}<0 \\
 1, & \text { if } z_{i}^{(2)}\geq0
 \end{array}\right.
-$ \\ \\
+$ \\
 
 $\frac {\partial J}{\partial z_{i}^{(2)}} = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bigtriangleup_i) \delta_i$ \\ \\
 
