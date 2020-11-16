@@ -116,7 +116,7 @@ $\frac{\partial J}{\partial \psi(z_{i}^{(3)})_{y_{i}}} = - \frac{1}{N \psi(z_{i}
 
 $ a_{i}^{(3)} = f(x) = \psi(z_{i}^{(3)}),\ \ \ \ \ \ x = z_{y_{i}}^{(3)}$ \\
 
-$ \frac{\partial a_{i}^{(3)}}{\partial z_j} = \psi(z_{i}^{(3)})_{y_{i}} (1 - \psi(z_{i}^{(3)})_{y_{i}}) $ \\
+$ \frac{\partial a_{i}^{(3)}}{\partial z_{i}^{(3)}} = \psi(z_{i}^{(3)})_{y_{i}} (1 - \psi(z_{i}^{(3)})_{y_{i}}) $ \\
 
 \item $\frac{\partial J}{\partial z_{i}^{(3)}} = \frac{\partial J}{\partial a_{i}^{(3)}} \frac{\partial a_{i}^{(3)}}{\partial z_{i}^{(3)}} = 1 (1 - \psi(z_{i}^{(3)})_{y_{i}}) = \frac{1}{N} (\psi(z_{i}^{(3)})_{y_{i}} - 1)$ \\
 
@@ -138,12 +138,12 @@ $$
 \end{aligned}
 $$
 
-We can use the property as follows, that is:\\ 
+We can use the property as follows:\\ 
 
 
 $f(x) = aW, \ \ \ \ \ \ \frac{\partial f(x)}{\partial a} = W,\ \ \ \ \ \ \frac{\partial f(x)}{\partial W} = a$\\
 
-Using upstream and local gradient:\\
+Using upstream and local gradient, we can apply the chain rule:\\
 
 $\frac{\partial J}{\partial W_2} = \frac{\partial J}{\partial z_{i}^{(3)}} \frac{\partial z_{i}^{(3)}}{\partial W_2} \ \ \ \ \ \ \ \ \ \frac{\partial z_{i}^{(3)}}{\partial W_2} = a_{i}^{(2)} \ \ \ \ \ \ since \ \  z_{i}^{(3)} = W_2 a_{i}^{(2)} + b $\\ \\
 
@@ -182,33 +182,43 @@ $\frac{\partial J}{\partial W_2} = \frac{1}{N} (\psi(z_3) - 1) a_{2}^{T} + 2\lam
 
 We now derive the expressions for the derivatives of the regularized loss in Eq. (3) w.r.t. W(1), b(1), b(2):\\
 
-$\frac{\partial J}{\partial z_{i}^{(3)}} = - \frac{1}{N} (\psi (z_{j}^{(i)}) - \bigtriangleup_i$ \\ \\
 
-$z_{i}^{(3)} = a_{i}^{(3)} W^2 + b^2$ \\ \\
+\begin{itemize}
 
-$\frac {\partial J}{\partial W_2} = \frac {1}{N} (\psi (z_{ji} - \bigtriangleup_i) a_{2i} $ \\ \\
+\item $\frac{\partial J}{\partial z_{i}^{(3)}} = - \frac{1}{N} (\psi (z_{i}^{(3)}) - \bigtriangleup_i$ \\ \\
 
-$\frac {\partial J}{\partial a_{2i}} = \frac{1}{N} (\psi (z_{ij} - \bigtriangleup_i) W_2$ \\	\\
+\item $z_{i}^{(3)} = a_{i}^{(3)} W^{(2)} + b^{(2)}$, so as we have seen in 2.b: \\ 
 
-$\frac {\partial J}{\partial b} = \frac {\partial J}{\partial z_{ji}} = \frac{1}{N} (\psi(z_{jn}) - \bigtriangleup_i)$ \\ \\
+$\frac {\partial J}{\partial W_2} = \frac {1}{N} (\psi (z_{i}^{(3)} - \bigtriangleup_i) a_{2i} $\\ \\
 
-$\frac {\partial J}{\partial z_{2i}} = \frac {\partial J}{\partial a_{2i}} \frac {\partial J_{2i}}{\partial z_{2i}} \rightarrow a_{2i}\left\{\begin{array}{ll}
-0, & \text { if } z_{2i}<0 \\
-z_{2i}, & \text { if } z_{2i}\geq0
+For the same reason:
+
+\item $\frac {\partial J}{\partial a_{i}^{(2)}} = \frac{1}{N} (\psi (z_{i}^{(3)} - \bigtriangleup_i) W_2$ \\	\\
+
+\item $\frac {\partial J}{\partial b_2} = \frac {\partial J}{\partial z_{i}^{(3)}} = \frac{1}{N} (\psi(z_{jn}) - \bigtriangleup_i)$ \\ \\
+
+Using the chain rule:
+
+\item $\frac {\partial J}{\partial z_{i}^{(2)}} = \frac {\partial J}{\partial a_{i}^{(2)}} \frac {\partial a_{i}^{(2)}}{\partial z_{i}^{(2)}} \rightarrow a_{i}^{(2)}\left\{\begin{array}{ll}
+0, & \text { if } z_{i}^{(2)}<0 \\
+z_{i}^{(2)}, & \text { if } z_{i}^{(2)}\geq0
 \end{array}\right.
-\rightarrow \frac {\partial a_{2i}}{\partial z_{2i}} =
+\rightarrow \frac {\partial a_{i}^{(2)}}{\partial z_{i}^{(2)}} =
 \left\{\begin{array}{ll}
-0, & \text { if } z_{2i}<0 \\
-i, & \text { if } z_{2i}\geq0
+0, & \text { if } z_{i}^{(2)}<0 \\
+1, & \text { if } z_{i}^{(2)}\geq0
 \end{array}\right.
 $ \\ \\
 
-$\frac {\partial J}{\partial z_{2i}} = \frac{1}{N} (\psi(z_{2i}) - \bigtriangleup_i) \delta_i$ \\ \\
+$\frac {\partial J}{\partial z_{i}^{(2)}} = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bigtriangleup_i) \delta_i$ \\ \\
 
-$\frac {\partial J}{\partial b_i} = \frac {\partial J}{\partial z_{2i}}$ \\ \\
+\item $\frac {\partial J}{\partial b_1} = \frac {\partial J}{\partial z_{i}^{(2)}} = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bigtriangleup_i) \delta_i$ \\ \\
 
-$\frac {\partial J}{\partial W_1} = \frac {\partial J}{\partial z_{2i}} a_{i}^{(i)} \ \ \  \|\frac {\partial J}{\partial a_i} = \frac {\partial J}{\partial z_{2i}}$
+\item $\frac {\partial J}{\partial W_1} = \frac {\partial J}{\partial z_{i}^{(2)}} a_{1}^{(1)} = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bigtriangleup_i) \delta_i \ a_{1}^{(1)}$ \\ \\
 
+\item $\frac {\partial J}{\partial a_i} = \frac {\partial J}{\partial z_{i}^{(2)}} W_1 = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bigtriangleup_i) \delta_i \ W_1$
+
+\end{itemize}
 
 
 
