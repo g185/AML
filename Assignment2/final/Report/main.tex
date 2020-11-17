@@ -220,12 +220,30 @@ $\frac {\partial J}{\partial z_{i}^{(2)}} = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bi
 
 \end{itemize}
 
+\newpage
 
+\section*{Question 4 - Multi-layer perceptron using PyTorch}
+\section* {4. c}
 
-
-
-
-
+\begin{table}[ht]
+\begin{center}
+\caption{Train and Test Accuracy for multiple layers.}
+\begin{tabular}{rrlll}
+\toprule
+ Total Layers &  Epochs & Hidden Layer Size & Train Accuracy & Test Accuracy \\
+\midrule
+            3 &      20 &            250,\ 50 &         55.3 \% &        56.8 \% \\
+            2 &      20 &               100 &         55.8 \% &        54.0 \% \\
+            3 &      10 &            250,\ 50 &         53.4 \% &        53.1 \% \\
+            2 &      10 &               100 &         52.2 \% &        51.5 \% \\
+            5 &      20 &   200,\ 200,\ 250,\ 150 &          9.8 \% &        10.0 \% \\
+            4 &      10 &       150,\ 100,\ 200 &          9.8 \% &         9.0 \% \\
+            4 &      20 &       150,\ 100,\ 200 &          9.8 \% &         9.0 \% \\
+            5 &      10 &   200,\ 200,\ 250,150 &          9.8 \% &         9.0 \% \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
 
 
 
