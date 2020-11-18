@@ -283,7 +283,7 @@ class TwoLayerNet(object):
                 val_acc = (self.predict(X_val) == y_val).mean()
                 train_acc_history.append(train_acc)
                 val_acc_history.append(val_acc)
-                print(val_acc)
+
                 # Decay learning rate
                 learning_rate *= learning_rate_decay
 

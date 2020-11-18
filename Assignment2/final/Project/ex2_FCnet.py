@@ -283,12 +283,12 @@ num_classes = 10
 net = TwoLayerNet(input_size, hidden_size, num_classes)
 # Train the network
 stats = net.train(X_train, y_train, X_val, y_val,
-            num_iters=6000, batch_size=100,
+            num_iters=5000, batch_size=300,
             learning_rate=2e-3, learning_rate_decay=0.95,
             reg=0.25, verbose=True)
 
 
-
+best_net = net
 # Predict on the validation set
 val_acc = (net.predict(X_val) == y_val).mean()
 print('Validation accuracy: ', val_acc)

@@ -23,13 +23,13 @@ print('Using device: %s'%device)
 # Hyper-parameters
 #--------------------------------
 input_size = 32 * 32 * 3
-hidden_size = [50]
+hidden_size = [250, 50]
 num_classes = 10
-num_epochs = 10
+num_epochs = 20
 batch_size = 200
 learning_rate = 1e-3
 learning_rate_decay = 0.95
-reg=0.001
+reg=0.002
 num_training= 49000
 num_validation =1000
 train = True
@@ -109,16 +109,21 @@ class MultiLayerPerceptron(nn.Module):
         #################################################################################
         
         layers = [] #Use the layers list to store a variable number of layers
-        
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        layers.append(torch.nn.Linear(input_size, hidden_layers[0]))
+        for index in range(len(hidden_layers)):
+            if index != len(hidden_layers) - 1 :
+                layers.append(torch.nn.Linear(hidden_layers[index], hidden_layers[index + 1]))
+            else:
+                layers.append(torch.nn.Linear(hidden_layers[index], num_classes))
 
-        
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         # Enter the layers into nn.Sequential, so the model may "see" them
         # Note the use of * in front of layers
         self.layers = nn.Sequential(*layers)
+        print(self.layers)
 
     def forward(self, x):
         #################################################################################
@@ -129,8 +134,14 @@ class MultiLayerPerceptron(nn.Module):
         #################################################################################
         
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-
+        
+        for index in range(len(self.layers)):
+            if index == 0 :
+                h_relu = self.layers[0](x.flatten(2).flatten(1)).clamp(min=0)
+            elif index != len(self.layers) - 1:
+                h_relu = self.layers[index](h_relu).clamp(min=0)
+            else:
+                out = self.layers[index](h_relu)
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         
@@ -144,10 +155,11 @@ for param_tensor in model.state_dict():
     print(param_tensor, "\t", model.state_dict()[param_tensor].size())
 '''
 
+print(hidden_size)
 if train:
     model.apply(weights_init)
     model.train() #set dropout and batch normalization layers to training mode
-
+    
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=reg)
@@ -168,8 +180,13 @@ if train:
             # Use examples in https://pytorch.org/tutorials/beginner/pytorch_with_examples.html
             #################################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+            y_pred = model(images)
+            loss = criterion(y_pred, labels)
 
-
+            
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -192,8 +209,10 @@ if train:
                 # 2. Get the most confident predicted class        #
                 ####################################################
                 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+                
+                y_pred = model(images)
+                _, predicted = torch.max(y_pred.data, 1)
 
-            
 
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
                 total += labels.size(0)
@@ -244,7 +263,8 @@ else:
             ####################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            
+            y_pred = model(images)
+            _, predicted = torch.max(y_pred.data, 1)
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             total += labels.size(0)
