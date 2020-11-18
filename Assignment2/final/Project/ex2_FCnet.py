@@ -259,7 +259,7 @@ show_net_weights(net)
 # **Explain your hyperparameter tuning process in the report.**
 
 
-best_net = None # store the best model into this
+best_net = net # store the best model into this
 
 #################################################################################
 # TODO: Tune hyperparameters using the validation set. Store your best trained  #
@@ -275,6 +275,23 @@ best_net = None # store the best model into this
 
 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
+
+
+input_size = 32 * 32 * 3
+hidden_size = 50
+num_classes = 10
+net = TwoLayerNet(input_size, hidden_size, num_classes)
+# Train the network
+stats = net.train(X_train, y_train, X_val, y_val,
+            num_iters=6000, batch_size=100,
+            learning_rate=2e-3, learning_rate_decay=0.95,
+            reg=0.25, verbose=True)
+
+
+
+# Predict on the validation set
+val_acc = (net.predict(X_val) == y_val).mean()
+print('Validation accuracy: ', val_acc)
 
 
 pass

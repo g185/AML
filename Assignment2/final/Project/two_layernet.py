@@ -1,5 +1,7 @@
 from __future__ import print_function
 
+
+import random
 from builtins import range
 from builtins import object
 import numpy as np
@@ -92,9 +94,24 @@ class TwoLayerNet(object):
         #############################################################################
         
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+        
+        def relu(u):
+            out = np.where(u<0, 0, u)
+            return out
+            
+        def softmax(u):
+            return np.exp(u).T / np.sum(np.exp(u), axis = 1)
+            
+        a1 = X
+        z2 = np.dot(X, W1) + b1 # First hidden layer
+        a2 = relu(z2)
+        z3 = np.dot(a2, W2) + b2 # Second hidden layer
         
 
+        scores = softmax(z3).T
+
+        
+        
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -119,8 +136,10 @@ class TwoLayerNet(object):
         
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         
+        ce_loss = - np.log(scores)[np.arange(scores.shape[0]), y]
         
-        
+        loss = (1 / N) * np.sum(ce_loss) + reg * (np.power(np.linalg.norm(W1), 2) + np.power(np.linalg.norm(W2), 2))
+                    
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -135,9 +154,38 @@ class TwoLayerNet(object):
         ##############################################################################
 
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-        
-        
 
+        
+        K_delta = np.zeros(scores.shape)
+
+        for row_index in range(len(y)): 
+          index = y[row_index]
+          K_delta[row_index][index] = 1
+          
+          
+        def reluDerivative(x):
+            x[x<=0] = 0
+            x[x>0] = 1
+            return x
+
+        
+        def regu_term(x):
+            return 2 * reg * x
+        
+        
+        z3_gradient = (1 / len(X) * (scores - K_delta))
+        
+        z2_gradient = np.dot(z3_gradient, W2.T) * reluDerivative(z2)
+                
+        grads['W1'] = np.dot(z2_gradient.T, a1).T + regu_term(W1)
+        
+        grads['W2'] = np.dot(z3_gradient.T, a2).T + regu_term(W2)
+        
+        grads['b1'] = np.sum(z2_gradient, axis=0)
+        
+        grads['b2'] = np.sum(z3_gradient, axis=0)
+    
+        
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -188,7 +236,15 @@ class TwoLayerNet(object):
             
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             
+            r = range(X.shape[0])
+            i = random.sample(r, len(r))
             
+            # Creating batches
+            X_batch=X[i[0:200]]
+            y_batch= y[i[0:200]]
+            
+
+
             
             pass
         
@@ -208,6 +264,10 @@ class TwoLayerNet(object):
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             
             
+            self.params['W1'] = self.params['W1'] - learning_rate * grads["W1"]
+            self.params['b1'] = self.params['b1'] - learning_rate * grads["b1"]
+            self.params['W2'] = self.params['W2'] - learning_rate * grads["W2"]
+            self.params['b2'] = self.params['b2'] - learning_rate * grads["b2"]
             
             pass
         
@@ -223,7 +283,7 @@ class TwoLayerNet(object):
                 val_acc = (self.predict(X_val) == y_val).mean()
                 train_acc_history.append(train_acc)
                 val_acc_history.append(val_acc)
-
+                print(val_acc)
                 # Decay learning rate
                 learning_rate *= learning_rate_decay
 
@@ -258,7 +318,7 @@ class TwoLayerNet(object):
         
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-
+        y_pred = np.argmax(self.loss(X), axis=1)
 
         pass
 

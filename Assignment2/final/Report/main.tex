@@ -221,7 +221,108 @@ $\frac {\partial J}{\partial z_{i}^{(2)}} = \frac{1}{N} (\psi(z_{i}^{(2)}) - \bi
 \end{itemize}
 
 \newpage
+\section*{Question 3 - Stochastic gradient descent }
+\textbf{Stochastic Gradient Descent} is a type of the gradient descent algorithm that calculates the error and updates the model for each record in the training dataset. Memory consumption will be low for this type of gradient descent. The way we approached this task, was through testing different batch sizes and number of iterations, in order to spot the best results for the validation accuracy, loss, and test accuracy. The statistics we got from this process were the following:
 
+\begin{table}[h!]
+\begin{tabular}{|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|l|}{\textbf{Iteration}} & \multicolumn{1}{l|}{\textbf{Batch Size}} & \multicolumn{1}{l|}{\textbf{Learning Rate}} & \multicolumn{1}{l|}{\textbf{Validation Accuracy}} & \multicolumn{1}{l|}{\textbf{Test Accuracy}} \\ \hline
+2000 & 300 & 2.00E-03 & 0.502 & 0.483 \\ \hline
+3000 & 300 & 2.00E-03 & 0.486 & 0.496 \\ \hline
+3000 & 200 & 2.00E-03 & 0.502 & 0.489 \\ \hline
+4000 & 200 & 2.00E-03 & 0.518 & 0.505 \\ \hline
+4000 & 300 & 2.00E-03 & 0.5 & 0.506 \\ \hline
+5000 & 300 & 2.00E-03 & 0.516 & 0.529 \\ \hline
+5000 & 200 & 2.00E-03 & 0.503 & 0.519 \\ \hline
+5000 & 100 & 2.00E-03 & 0.511 & 0.506 \\ \hline
+6000 & 300 & 2.00E-03 & 0.52 & 0.524 \\ \hline
+6000 & 200 & 2.00E-03 & 0.527 & 0.511 \\ \hline
+6000 & 500 & 2.00E-03 & 0.525 & 0.512 \\ \hline
+6000 & 100 & 2.00E-03 & 0.501 & 0.503 \\ \hline
+\end{tabular}
+\end{table}
+Iteration size we chose was in the range [2000-6000], batch size [100-300].
+We got the following plots for the testing. We can see that we tend to have less significant changes after 5000 iterations in our accuracies. 
+\begin{figure}[h!]
+     \centering
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_1.JPG}
+         \caption{It=2000, Batch Size=300}
+         \label{Iteration=2000, Batch Size=300}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_2.JPG}
+         \caption{It=3000, Batch Size=300}
+         \label{fig:three sin x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_3.JPG}
+         \caption{It=3000, Batch Size=200}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_4.JPG}
+         \caption{It=4000, Batch Size=200}
+     \end{subfigure}
+      \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/img_5.JPG}
+         \caption{It=4000, Batch Size=300}
+     \end{subfigure}
+      \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_6.JPG}
+         \caption{It=5000, Batch Size=300}
+     \end{subfigure}
+      \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_7.JPG}
+         \caption{It=5000, Batch Size=200}
+     \end{subfigure}
+      \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_8.JPG}
+         \caption{It=5000, Batch Size=100}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_9.JPG}
+         \caption{It=6000, Batch Size=300}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_10.JPG}
+         \caption{It=6000, Batch Size=200}
+     \end{subfigure}
+      \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_11.JPG}
+         \caption{It=6000, Batch Size=500}
+     \end{subfigure}
+      \hfill
+     \begin{subfigure}[b]{0.2\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{img/Img_12.JPG}
+         \caption{It=6000, Batch Size=100}
+     \end{subfigure}
+        \caption{Loss and Train/ Validation accuracies}
+        \label{fig:three graphs}
+\end{figure}
+\newpage
 \section*{Question 4 - Multi-layer perceptron using PyTorch}
 \section* {4. c}
 
